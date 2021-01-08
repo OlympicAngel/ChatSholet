@@ -1,0 +1,17 @@
+{
+  "short_name": "צאט שולט",
+  "name": "צאט שולט - אולימפיק אנג'ל",
+  "description": "אפשר לצאט לשלוט במשחק שלך!",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#b296d8",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#573b9c"
+}

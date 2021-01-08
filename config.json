@@ -1,0 +1,42 @@
+{
+	"token": "Nzk1MzU2NTgwNzk0MjA0MTgx.X_ILiQ.uH7SDWGn1kcnERltKB74nt-qCgM",
+	"window": "CCLibrary",
+	"keySender": {
+		"keys": [
+			"w",
+			"a",
+			"s",
+			"d",
+			"r",
+			"tab",
+			"q",
+			"e"
+		],
+		"alterKeys": {
+			"report": "r",
+			"kill": "q",
+			"use": "e"
+		},
+		"multipleKeys": [
+			"w",
+			"a",
+			"s",
+			"d",
+			"r",
+			"tab",
+			"q",
+			"e"
+		],
+		"duration": 600
+	},
+	"lister": {
+		"blackList": [
+			""
+		],
+		"favoList": [
+			"AMPlaying"
+		]
+	},
+	"discordChannel": "commands",
+	"browser": 1
+}

@@ -1,0 +1,5 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+build/Warraper/packages/cef.refist.x64.75.1.14/CEF/libcef.dll filter=lfs diff=lfs merge=lfs -text
+build/Warraper/packages/cef.redist.x64.75.1.14/CEF/libcef.dll filter=lfs diff=lfs merge=lfs -text
+libcef.dll filter=lfs diff=lfs merge=lfs -text

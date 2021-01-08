@@ -1,0 +1,132 @@
+<head>
+    <meta charset="UTF-8">
+        <title>שליטת צאט דיסקורד במשחקים</title>
+    <style>
+        body{
+            transform: rotateX(180deg);
+            overflow: hidden;
+        }
+
+        
+        div
+        {
+            width: fit-content;
+            padding: 0.5vmin 1vmin;
+            border-radius: 23vmin;
+            border-bottom-left-radius: 0;
+            background-color: #8c84b9;
+            color: #fff;
+            font-family: heebo;
+            line-height: 2.8vmin;
+            font-size: 3vmin;
+            text-align: center;
+            box-shadow: 0 0.3vmin 0.7vmin -0.2vmin #0009;
+            font-weight: 500;
+            min-width: 12vmin;
+            padding-top: 1.6vmin;
+            margin: 0.4vmin;
+            transform: scale(0.8) rotateX(180deg);
+            border-right: solid 0.4vmin #efefef;
+            text-shadow: 0 0.1vmin 0.2vmin #000,0 0.1vmin 0.2vmin #000;
+            margin-left: 1.5vmin;
+            opacity: 0.8;
+            animation: height 1s forwards;
+            height: 4vmin;
+        }
+        
+        div[sender]:not([highlight=true])::before
+        {
+            content: attr(sender);
+            font-weight: 300;
+            font-size: 2vmin;
+            position: absolute;
+            top: 0;
+            left: 0.5vmin;
+            line-height: 2vmin;
+            font-style: italic;
+            width: 85%;
+            display: block;
+            line-break: revert;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            text-align: left;
+        }
+        
+        div[highlight="true"]
+        {
+            background-color: #36c141;
+            transform: rotateX(180deg);
+            border-color: gold;
+            font-weight: 900;
+            margin-left: 0.5vmin;
+            text-shadow: 0 0.2vmin black, 0 0.1vmin 0.7vmin #0000007a;
+            font-size: 4vmin;
+            line-height: 3.5vmin;
+            opacity: 1;
+            padding: 0.5vmin 1vmin;
+        }
+        
+        @keyframes height
+        {
+            0%{
+                height: 0px;
+            }
+            100%{height: 3vmin;}
+        }
+    </style>
+</head>
+<body class>
+
+<script>
+    const port = "{0}";
+    const pageType = "show";
+    const url = 'localhost:' + port;
+    var socketable = false;
+    const elemntTimout = 4000;
+    var socket;
+    
+    (function(){
+        startWebsocket();
+    })();
+
+    
+    
+    function startWebsocket() {
+      socket = new WebSocket('ws://' + url,pageType)
+    
+        // Connection opened
+        socket.addEventListener('open', function (event) {
+            socketable = true;
+        });
+    
+        // Listen for messages
+        socket.addEventListener('message', function (event) {
+            console.log('Message from server ', event.data);
+            var obj = event.data;
+            try
+            {
+                obj = JSON.parse(obj)
+            }catch(e){return console.warn("not object")}
+
+            if(obj.key)
+            {
+                var elemnt = document.createElement("div")
+                elemnt.innerHTML = obj.key.toUpperCase();
+                elemnt.setAttribute("sender",obj.sender);
+                elemnt.setAttribute("highlight",obj.isFinal);
+                setTimeout(function(){
+                    this.remove();
+                }.bind(elemnt),elemntTimout);
+                document.body.insertBefore(elemnt,document.body.firstChild);
+            }
+        });
+    
+        socket.onclose = function(err){
+        socket = null;
+        socketable = false;
+        setTimeout(startWebsocket, 3000);
+      }
+    }
+    </script>
+</body>

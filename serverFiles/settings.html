@@ -1,0 +1,163 @@
+<head>
+    <meta charset="UTF-8">
+    <title>שליטת צאט דיסקורד במשחקים</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" type="image/png" href="icon.png" />
+</head>
+
+<body class="force">
+    <table width=100%>
+        <tr>
+            <td>
+                <p>
+                    <div id="onNotLoged" title="התחברות בוט" class="win">
+                        <div id="discordBotConve">
+                            <h4>יש לך בוט דיסקורד?</h4>
+                            <input type="radio" name="discordCon" id="yesBot">
+                            <label for="yesBot">כן</label>
+                            <div class="info">
+                                <p>איזה יופי! שים לב שמומלץ ליצור בוט חדש יעודי רק לזה - כדי למנוע תקלות ו/או בעיות
+                                    שנובעות בשימושים אחרים בבוט..<br>
+                                    זה לא חובה אבל רצוי, בכל מצב, פתח את דף הניהול בדיסקורד DEV והעתק את הקוד של הבוט
+                                    לפה והתבחר.</p>
+                                <a href="https://discord.com/developers/applications/" target="_blank">קישור לדף הבוטים
+                                    שלך בדיסקורד.</a><br>
+                                <iframe width="560" height="315"
+                                    src="https://www.youtube.com/embed/fGZD8av3tU4?start=26" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+
+                            <input type="radio" name="discordCon" id="noBot">
+                            <label for="noBot">לא</label>
+                            <div class="info">
+                                <p>הכל טוב. ניתן ליצור בוט ממש בקלות ובחינם דרך דיסקורד DEV.. (יש גם סרטון הסבר)<Br>
+                                    פשוט פתח את הקישור, התחבר עם המשתמש דיסקורד הרגיל שלך, צור פרוייקט חדש, בפרוייקט הזה
+                                    צור בוט חדש והעתק את הקוד שלו לפה.</p>
+                                <a href="https://discord.com/developers/applications" target="_blank">לחץ כדי ליצור
+                                    בוט.</a><br>
+                                <iframe width="560" style="max-width: 100%;" height="315"
+                                    src="https://www.youtube.com/embed/fGZD8av3tU4" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                            <br>
+                            <br>
+                        </div>
+                        <span>
+                            הקוד של הבוט:
+                        </span><br>
+                        <input type="password" placeholder="הכנס קוד פה" id="code" /><br>
+                        <button
+                            style="width: 30%; min-width: 14vmin; font-size: 4vmin; margin-top: 1vmin; background-color: #8ef560;"
+                            onclick="$socket.SendSettings({token:document.getElementById('code').value})">חבר את
+                            הבוט!</button>
+                    </div>
+                    <div id="onLoged" title="הגדרות בוט" class="win">
+                        הבוט פעיל!
+                        <button style="background-color:#ffc9c9" onclick="$socket.Send({disconnect:1});">התנתק</button>
+
+                        <p style="font-size: 1.6vmin; transform: scale(0.8);">
+                            שרתים שהבוט מחובר אליהם יופיעו פה אוטומטית, במידה ולא
+                            <a onclick="forceReloadServers()">לחץ פה לבדיקה ידנית</a>
+                        </p>
+                        <div id="serversConn"></div>
+                        <label extra="חשוב: לבוט חייבת להיות גישה לקרא את הצאט הזה." for="servChannel">מאזין למקשים בחדר
+                            שמכיל בכותרת:</label>
+                        <input id="servChannel" placeholder="ChatCtrl" />
+                        <button
+                            onclick="$socket.SendSettings({discordChannel:document.getElementById('servChannel').value})">שמור</button>
+
+                        <label extra="הבוט יתעלם ממשתמשים אלו. לפי השם בדיסקורד." for="blackList">משתמשים
+                            חסומים:</label>
+                        <input id="blackList" placeholder="שם1, שם2, שם3 ..." />
+                        <button
+                            onclick="$socket.SendSettings({lister:{blackList:document.getElementById('blackList').value.split(',')}})">שמור</button>
+
+                        <label extra="פעולות ממשתמשים אלו יספרו פעמיים." for="whiteList">משתמשים מועדפים:</label>
+                        <input id="whiteList" placeholder="שם1, שם2, שם3 ..." />
+                        <button
+                            onclick="$socket.SendSettings({lister:{favoList:document.getElementById('whiteList').value.split(',')}})">שמור</button>
+                    </div>
+
+                </p>
+            </td>
+            <td>
+                <center class="win" id="realSett" title="הגדרות תוכנה">
+                    <p><span>שלח מקשים אל:</span>
+                        <select name="games" id="games" disabled
+                            onchange="$socket.SendSettings({window:document.getElementById('games').value})">
+                            <option disabled selected>טוען חלונות שפתוחים כרגע במחשב</option>
+                        </select><button
+                            onclick="document.getElementById('games').setAttribute('disabled',true);$socket.Send({getWins:1})">רענן</button>
+                    </p>
+                    <p>
+                        <label extra="מופרד בפסיקים, אפשר גם ctrl, space, shift ...">מקשים שאפשר לשלוח למשחק:</label>
+                        <input id="keys" placeholder="w,a,s,d,ctrl,shift,space ..." />
+                        <button for="keys"
+                            onclick="textToObj(this,'array',JSON.stringify({keySender:{keys:null}}))">שמור</button>
+                    </p>
+                    <p>
+                        <label extra="מאפשר לכתוב משהוא אחר בצאט וזה יזהה כמקש.
+                        כתוב בצורה של key=name, מופרד בפסיקים.">שמות אלטרנטיבים למקשים:</label>
+                        <input id="alterKeys" placeholder="w=go, jump=ctrl ..." />
+                        <button for="alterKeys"
+                            onclick="textToObj(this,'json',JSON.stringify({keySender:{alterKeys:null}}))">שמור</button>
+                    </p>
+                    <p>
+                        <label extra="יאפשר לשלוח שני מקשים פה ביחד במידה ושניהם נכתבו הכי הרבה בצאט.">מקשים שאפשר לשלוח
+                            ביחד:</label>
+                        <input id="multiple" placeholder="w,a,s,d,ctrl,shift,space ..." />
+                        <button for="multiple"
+                            onclick="textToObj(this,'array',JSON.stringify({keySender:{multipleKeys:null}}))">שמור</button>
+                    </p>
+                    <p>
+                        <label extra="מקשים ישלחו בלחיצה ארוכה באורך זמן הזה..    1000 = שנייה אחת.">אורך זמן הלחיצה לכל
+                            מקש:</label>
+                        <input id="press" onblur="fixInput(this)" placeholder="500" min="100" max="10000" step="50"
+                            type="number" />
+                        <button
+                            onclick="$socket.SendSettings({keySender:{duration:Number(document.getElementById('press').value)}})">שמור</button>
+                    </p>
+                    <span id=obsurltext>צור אויבייקט דפדפן חדש בתוכנת לייבים שלך והכנס את הכתובת הבאה:</span>
+                    <input type=text readonly="readonly" onClick="this.select();" id="obsurl">
+
+                    <div id="chrome">
+                        <p>נראה כי כרום לא מותקן אצלך.. רצוי מאוד לפתוח את התוכנה באמצעות כרום! לחץ פה לאחר שהתקנת כרום
+                            בכדי שפעם הבאה התכונה תפתח עם כרום
+                            <button onclick="$socket.SendSettings({browser:1})">לחץ לאחר התקנה</button>
+                        </p>
+                    </div>
+                </center>
+            </td>
+        </tr>
+    </table>
+    <div id="info" class="win" title="צאט שולט">
+        <div style="display: inline-block; width:69%;    vertical-align: top;
+    margin-top: 2%;">
+            <h5 style="background: rgba(0, 0, 0, 0.6);
+        border-radius: 1vmin; text-align:center">נוצר על ידי <a href="https://www.youtube.com/OlympicAngel"
+                    target="_blank">OlympicAngel</a></h5>
+            <p style="font-size: 2vmin;line-height:normal; font-weight: 400;height: 62%;
+            overflow: auto;">
+                "צאט שולט" מאפשרת למשתמשים בשרת הדיסקורד שלך לשלוח תווים כמו
+                [w,a,s,d,ctrl,space,shift,tab,...] בחדר צאט ספציפי, ועל פי רוב התווים שנשלחים שם ישלח המקש עצמו במחשב
+                שלך לחלון יעודי.
+                <br> -מקשים ישלחו רק אם החלון בפוקוס.
+                <br> -המקש שירשמו הכי הרבה פעמים בצאט ישלח אצלך, אחר כך - מתאפסת כמות הפעמים ששלחו תווים קודמים.
+                <br> -במידה ושני המקשים שנשלחו הכי הרבה בצאט הם מקשים "שאפשר לשלוח ביחד", שניהם ישלחו לחלון.
+                <br> -ניתן לפתוח חלון בדפדפן - מיועד לOBS - שם יוצגו וויזואלית את כל המקשים שמשתמשים שולחים בדיסקורד.
+            </p>
+            <span style="font-size: 1.6vmin; font-weight: 200; font-style: italic;">התוכנה פותחה בסביבת עבודה של Node.js,
+                ונעזרת בחבילות:<br> discord.js, kbm-robot, node-active-window, cli-color</span>
+        </div>
+        <textarea id="brain">
+
+    </textarea>
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
