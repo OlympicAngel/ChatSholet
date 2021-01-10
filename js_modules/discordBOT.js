@@ -28,7 +28,6 @@ module.exports = {
      */
     onMSG_Event: function (message) {
         const settings = configer.get();
-        console.log("msg");
         if (settings.lister.blackList.indexOf(message.author.username) != -1) return;
 
         if (message.channel.name == undefined) {

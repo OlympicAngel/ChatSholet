@@ -126,7 +126,7 @@ var localHost = {
         } else {
             setTimeout(() => {
                 if (module.exports.settingsWS == undefined)
-                    process.exit();
+                    process.emit("exit");
             }, 1000);
 
         }

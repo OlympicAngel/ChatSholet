@@ -14,6 +14,7 @@ module.exports = {
     jarState: false,
     keysStack: {},
     pressing: false,
+    fixTimeout: undefined,
 
     OnNewMessage(msg, isFavo, sender) {
         const settings = configer.get();
@@ -62,12 +63,21 @@ module.exports = {
 
     },
 
-    SendKey() {
-        const keyStackCOPY = Object.assign(this.keysStack);
-        this.keysStack = {};
+    reFixTimout() {
+        const settings = configer.get();
+        const pressLength = Number(settings.keySender.duration);
+        clearTimeout(module.exports.fixTimeout);
+        module.exports.fixTimeout = setTimeout(() => {
+            module.exports.pressing = false;
+        }, pressLength * 1.2 + 20);
+    },
 
+    SendKey() {
+        const keyStackCOPY = Object.assign({}, this.keysStack);
+        this.keysStack = {};
         const settings = configer.get();
         this.pressing = true;
+
         var mostCommon = {
                 key: "",
                 amount: 0
@@ -91,10 +101,14 @@ module.exports = {
 
         var keyToSend = [mostCommon.key];
         const secKey = secCommon.key;
-        if (secCommon.amount / mostCommon.amount >= 0.6) {
+        if (secCommon.amount / mostCommon.amount >= 0.4) {
             const multipeKeysOption = settings.keySender.multipleKeys;
             if (multipeKeysOption.indexOf(keyToSend) != -1 && multipeKeysOption.indexOf(secKey)) {
                 if (IsBlockedCombo(keyToSend, secKey, ["w", "s"]) ||
+                    IsBlockedCombo(keyToSend, secKey, ["a", "d"]) ||
+                    IsBlockedCombo(keyToSend, secKey, ["alt", "f4"]) ||
+                    IsBlockedCombo(keyToSend, secKey, ["ctrl", "w"]) ||
+                    IsBlockedCombo(keyToSend, secKey, ["shift", "enter"]) ||
                     IsBlockedCombo(keyToSend, secKey, ["a", "d"]) ||
                     IsBlockedCombo(keyToSend, secKey, ["shift", "tab"])) {
                     //blocked combination send only top most key
@@ -103,12 +117,21 @@ module.exports = {
                 }
             }
         }
-        const pressLength = Number(settings.keySender.duration);
 
         console.log("[discordBot]: sending key-" + keyToSend + "/" + mostCommon.amount + ".");
         if (secCommon.key != "")
             console.log("[discordBot]: (2d key-" + secCommon.key + "/" + secCommon.amount + ")");
 
+        onPressEnd = function () {
+            if (Object.keys(this.keysStack).length === 0) {
+                module.exports.pressing = false;
+                return;
+            } else {
+                module.exports.reFixTimout();
+                module.exports.SendKey();
+            }
+        };
+        const pressLength = Number(settings.keySender.duration);
         if (keyToSend.length != undefined && keyToSend.length == 2) {
             console.log("               also sending " + secCommon.key + ".");
 
@@ -116,21 +139,26 @@ module.exports = {
                 .press(keyToSend[0]).press(keyToSend[1])
                 .sleep(pressLength)
                 .release(keyToSend[0]).release(keyToSend[1])
-                .go();
+                .go(onPressEnd);
         } else {
             robot
                 .press(keyToSend[0])
                 .sleep(pressLength)
                 .release(keyToSend[0])
-                .go();
+                .go(onPressEnd);
         }
-        setTimeout(() => {
-            module.exports.pressing = false;
-        }, pressLength + 20);
-
+        this.reFixTimout();
         localhost.ShowOnWebClint(keyToSend, true, false);
     },
 
+    closeBOT() {
+        if (this.jarState) {
+            try {
+                robot.stopJar();
+            } catch (e) {}
+        }
+        robot.delFile();
+    },
 
     set(key, val) {
         this[key] = val;

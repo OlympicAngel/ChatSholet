@@ -7,10 +7,18 @@
   "scripts": {
     "start": "node index.js"
   },
-  "pkg":{
-    "assets": [ "js_modules/**/*","node_modules/**/*","serverFiles/*"],
-    "scripts": [ "js_modules/**/*" ],
-    "targets": ["node10-win-x64" ]
+  "pkg": {
+    "assets": [
+      "js_modules/**/*",
+      "serverFiles/*",
+      "node_modules/**/*"
+    ],
+    "scripts": [
+      "js_modules/**/*.js"
+    ],
+    "targets": [
+      "node14-win-x64"
+    ]
   },
   "author": "OlympicAngel",
   "license": "ISC",
