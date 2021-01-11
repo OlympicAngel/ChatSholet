@@ -3,3 +3,7 @@
 /build/
 build/**/*
 *.code-workspace
+config.json
+/config.json
+config.json
+config.json
