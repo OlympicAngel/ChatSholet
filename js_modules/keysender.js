@@ -21,20 +21,14 @@ module.exports = {
         localhost.ShowOnWebClint(msg, false, isFavo, sender);
 
         if (windowState.currentWindow.toLowerCase() != settings.window.toLowerCase()) {
-            if (this.jarState) {
-                this.jarState = false;
-                robot.stopJar();
-                return console.log("[discordBot]: stops collecting messgaes as the window is not in focus.");
-            }
-            console.log(windowState.currentWindow.toLowerCase() + "!=" + settings.window.toLowerCase());
+            console.log("ignoring message" + windowState.currentWindow.toLowerCase() + "!=" + settings.window.toLowerCase());
             return;
         }
-
         if (!this.jarState) {
             this.jarState = true;
             robot.startJar();
-            console.log("[discordBot]: starts collecting messgaes(window in focus)....");
         }
+        console.log("DiscordBot: got:" + msg);
 
         //scan alternativ keys and switch to its real name key
         for (let key in settings.keySender.alterKeys) {

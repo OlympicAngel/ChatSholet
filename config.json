@@ -1,42 +1,40 @@
 {
-	"token": "Nzk1MzU2NTgwNzk0MjA0MTgx.X_ILiQ.uH7SDWGn1kcnERltKB74nt-qCgM",
-	"window": "Discord",
+	"token": null,
+	"window": "none",
 	"keySender": {
 		"keys": [
 			"w",
 			"a",
 			"s",
 			"d",
-			"r",
-			"tab",
-			"q",
-			"e"
+			"shift",
+			"ctrl",
+			"space",
+			"alt"
 		],
 		"alterKeys": {
-			"report": "r",
-			"kill": "q",
-			"use": "e"
+			"jump": "space"
 		},
 		"multipleKeys": [
 			"w",
 			"a",
 			"s",
 			"d",
-			"r",
-			"tab",
-			"q",
-			"e"
+			"shift",
+			"ctrl",
+			"space",
+			"alt"
 		],
-		"duration": 600
+		"duration": 500
 	},
 	"lister": {
 		"blackList": [
 			""
 		],
 		"favoList": [
-			"AMPlaying"
+			""
 		]
 	},
-	"discordChannel": "commands",
+	"discordChannel": "???????",
 	"browser": 1
 }

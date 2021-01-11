@@ -31,11 +31,15 @@ module.exports = {
         if (settings.lister.blackList.indexOf(message.author.username) != -1) return;
 
         if (message.channel.name == undefined) {
+            console.log("error no channel name");
             return;
         }
 
         const isChatControlRoom = message.channel.name.includes(settings.discordChannel);
-        if (message.author.bot || !isChatControlRoom) return;
+        if (message.author.bot || !isChatControlRoom) {
+            console.log("error, msg from bot / no in chat room");
+            return;
+        }
 
         const tempActivity = message.channel.name + " - מאזין לפקודות";
         if (tempActivity != activityStr) {
@@ -49,6 +53,8 @@ module.exports = {
         }
         const cleanMsg = message.content.toLowerCase();
         if (allowedStrArr.indexOf(cleanMsg) == -1) {
+            console.log("error, message is not from allowed list");
+
             return;
         }
 
