@@ -1,6 +1,6 @@
 {
   "name": "שליטת צאט במשחק",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "שליטת צאט דיסקורד במשחק בזמן אמת",
   "main": "index.js",
   "bin": "index.js",
