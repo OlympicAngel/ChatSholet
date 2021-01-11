@@ -20,6 +20,7 @@ if the window is the one set in configeration send it if not - ignore.
 Slightly modified some node_modules included in here in order to make it compatible with snapshot exports in executable mode.
 * kbm-robot: /kbm-robot.js - lines 5, 232, 240-250, 288-313.
 * node-active-window: /index.js - lines 13, 42-79, 102, 126.
+
 In both its mostly copy files from snapshot to local dir, rewriting paths and deleting the exported files it exit.
 
 ## Dependencies:
