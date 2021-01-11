@@ -23,8 +23,8 @@ Slightly modified some node_modules included in here in order to make it compati
 In both its mostly copy files from snapshot to local dir, rewriting paths and deleting the exported files it exit.
 
 ## Dependencies:
-* [cli-color](https://github.com/medikoo/cli-color) - colorizing the console output.(licensed under - ISC License)
-* [discord.js](https://github.com/discordjs/discord.js) - base comunication with discord.(licensed under - Apache-2.0 License)
-* [kbm-robot](https://github.com/kylepaulsen/kbm-robot) - module for sending keys using JAVA.(licensed under - MIT License)
-* [WebSocket-Node](https://github.com/theturtle32/WebSocket-Node) - websocket server for node.(licensed under -  Apache-2.0 License)
-* [node-active-window](https://www.npmjs.com/package/node-active-window) - get current active window.(licensed under - MIT License)
+* [cli-color](https://github.com/medikoo/cli-color) - colorizing the console output. (licensed under - ISC License)
+* [discord.js](https://github.com/discordjs/discord.js) - base comunication with discord. (licensed under - Apache-2.0 License)
+* [kbm-robot](https://github.com/kylepaulsen/kbm-robot) - module for sending keys using JAVA. (licensed under - MIT License)
+* [WebSocket-Node](https://github.com/theturtle32/WebSocket-Node) - websocket server for node. (licensed under -  Apache-2.0 License)
+* [node-active-window](https://www.npmjs.com/package/node-active-window) - get current active window. (licensed under - MIT License)
